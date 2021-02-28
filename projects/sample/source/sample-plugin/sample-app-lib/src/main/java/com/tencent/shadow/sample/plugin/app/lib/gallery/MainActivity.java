@@ -19,9 +19,13 @@
 package com.tencent.shadow.sample.plugin.app.lib.gallery;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -84,7 +88,48 @@ public class MainActivity extends Activity implements
 
         stickyLayout.setOnGiveUpTouchEventListener(this);
         slidingMenu.showMenu();
+        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+                Log.e("test", "onActivityCreated");
+            }
 
+            @Override
+            public void onActivityStarted(@NonNull Activity activity) {
+                Log.e("test", "onActivityStarted");
+            }
+
+            @Override
+            public void onActivityResumed(@NonNull Activity activity) {
+                Log.e("test", "onActivityResumed");
+            }
+
+            @Override
+            public void onActivityPaused(@NonNull Activity activity) {
+                Log.e("test", "onActivityPaused");
+            }
+
+            @Override
+            public void onActivityStopped(@NonNull Activity activity) {
+                Log.e("test", "onActivityStopped");
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
+                Log.e("test", "onActivitySaveInstanceState");
+            }
+
+            @Override
+            public void onActivityDestroyed(@NonNull Activity activity) {
+                Log.e("test", "onActivityDestroyed");
+            }
+
+            @Override
+            public void onActivityPostStarted(@NonNull Activity activity) {
+                //重写 default方法，ShadowActivityLifecycleCallbacks没有声明此方法
+                Log.e("test", "onActivityPostStarted");
+            }
+        });
     }
 
 
